@@ -4,7 +4,8 @@
 Game::Game()
     : imageManager(),
     sceneManager(&imageManager,&gameManager),
-    gameManager()
+    gameManager(),
+    charaManager(&imageManager)
 {
 }
 
@@ -72,7 +73,9 @@ void Game::ShutDown()
 /// </summary>
 void Game::InitImage()
 {
-    imageManager.Load("Monster", "Data/Monster.png");
+    //—EÒ
+    imageManager.Load("Hero", "Data/character_hero.png");
+    imageManager.Load("Castel", "Data/vampire.png");
 }
 
 /// <summary>

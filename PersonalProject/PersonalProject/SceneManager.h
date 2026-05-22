@@ -3,14 +3,12 @@
 #include "GameScene.h"
 
 class Scene;
-class ImageManager;
-class GameManager;
 
 class SceneManager
 {
 public:
 	//コンストラクタ
-	SceneManager(ImageManager* img, GameManager* gm);
+	SceneManager(GameContext& ctx);
 
 	//デストラクタ
 	~SceneManager();
@@ -27,9 +25,8 @@ public:
 
 private:
 	Scene* scene;
-	ImageManager* imageManager;
-	GameManager* gameManager;
 	int nextScene;
+	GameContext& ctx;
 
 	//シーンの変更処理
 	void CheckSceneChange();

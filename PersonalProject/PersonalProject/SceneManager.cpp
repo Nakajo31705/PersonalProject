@@ -1,8 +1,7 @@
 #include "SceneManager.h"
 
-SceneManager::SceneManager(ImageManager* img, GameManager* gm)
-	:imageManager(img),
-	gameManager(gm)
+SceneManager::SceneManager(GameContext& ctx)
+	:ctx(ctx)
 {
 	scene = new TitleScene(*this);
 	nextScene = -1;
@@ -57,7 +56,7 @@ void SceneManager::CheckSceneChange()
 	}
 	else if (nextScene == 1)
 	{
-		scene = new GameScene(*this, imageManager,gameManager);
+		scene = new GameScene(ctx, *this);
 	}
 
 	nextScene = -1;

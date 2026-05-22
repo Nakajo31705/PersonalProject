@@ -2,14 +2,23 @@
 #include "DxLib.h"
 #include "Scene.h"
 
+struct GameContext
+{
+	SceneManager& sceneManager;
+	ImageManager& imageManager;
+	GameManager& gameManager;
+	CharacterManager& charaManager;
+};
+
 class SceneManager;
 class ImageManager;
 class GameManager;
+class CharacterManager;
 
 class GameScene : public Scene
 {
 public:
-	GameScene(SceneManager& sm, ImageManager* imgmg, GameManager* gm);
+	GameScene(GameContext& ctx,SceneManager& sm);
 	void Init() override;
 	void Update() override;
 	void Draw() override;
@@ -17,7 +26,6 @@ public:
 	void ImageDraw();
 
 private:
-	SceneManager& sceneManager;
-	ImageManager* imageManager;
-	GameManager* gameManager;
+	GameContext& ctx;
+	SceneManager& sm;
 };

@@ -3,10 +3,8 @@
 #include "ImageManager.h"
 
 //コンストラクタで初期化
-GameScene::GameScene(SceneManager& sm, ImageManager* imgmg, GameManager* gm)
-	:sceneManager(sm),
-	imageManager(imgmg),
-	gameManager(gm)
+GameScene::GameScene(GameContext& ctx, SceneManager& sm)
+	:ctx(ctx), sm(sm)
 {
 }
 
@@ -23,7 +21,7 @@ void GameScene::Update()
 	//キーが入力されたらシーンの移動
 	if (nowKey == 1 && oldKey == 0)
 	{
-		sceneManager.RequestSceneChange(0);//タイトルに戻る
+		ctx.sceneManager.RequestSceneChange(0);//タイトルに戻る
 	}
 
 	oldKey = nowKey;
@@ -31,12 +29,6 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	//ImageManagerのnullチェック
-	if (imageManager == nullptr)
-		DrawString(10, 700, "ImageManagerがnullです", GetColor(255, 255, 255));
-	else
-		DrawString(10, 700, "ImageManagerがあります", GetColor(255, 255, 255));
-
 	ImageDraw();
 
 	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
@@ -45,15 +37,15 @@ void GameScene::Draw()
 
 void GameScene::ImageDraw()
 {
-	//モンスター１
-	int monster = imageManager->Get("Monster");
+	//No.1
+	int monster = ctx.imageManager.Get("Hero");
 	if (monster == -1)
 	{
 		DrawString(10, 750, "読み込み失敗", GetColor(255, 255, 255));
 	}
 	DrawRotaGraph(
 		200, 300,
-		0.1,
+		0.2,
 		0,
 		monster,
 		TRUE
