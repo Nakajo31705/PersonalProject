@@ -2,8 +2,10 @@
 #include "Game.h"
 
 Game::Game()
-    : imageManager(),
-    sceneManager(&imageManager,&gameManager),
+    :
+    ctx{sceneManager, imageManager,gameManager,charaManager},
+    imageManager(),
+    sceneManager(ctx),
     gameManager(),
     charaManager(&imageManager)
 {
@@ -31,6 +33,7 @@ bool Game::Init()
     InitImage();
     sceneManager.Init();
     gameManager.Init();
+    charaManager.Init();
 
     isRunning = true;
     return true;
@@ -75,7 +78,7 @@ void Game::InitImage()
 {
     //—EÒ
     imageManager.Load("Hero", "Data/character_hero.png");
-    imageManager.Load("Castel", "Data/vampire.png");
+    imageManager.Load("Castle","Data/castle_1.png");
 }
 
 /// <summary>
@@ -97,6 +100,7 @@ void Game::Update()
 {
     sceneManager.Update();
     gameManager.Update();
+    charaManager.Update();
 }
 
 /// <summary>
@@ -107,5 +111,6 @@ void Game::Render()
     ClearDrawScreen();
     sceneManager.Draw();
     gameManager.Draw();
+    charaManager.Draw();
     ScreenFlip();
 }

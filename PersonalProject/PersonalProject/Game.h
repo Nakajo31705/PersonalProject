@@ -23,4 +23,5 @@ private:
 	ImageManager imageManager;
 	GameManager gameManager;
 	CharacterManager charaManager;
+	GameContext ctx;
 };

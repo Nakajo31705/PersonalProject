@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 #include "ImageManager.h"
+#include "Game.h"
 
 //コンストラクタで初期化
 GameScene::GameScene(GameContext& ctx, SceneManager& sm)
@@ -10,21 +11,14 @@ GameScene::GameScene(GameContext& ctx, SceneManager& sm)
 
 void GameScene::Init()
 {
-
+	printfDx("Spawn called\n", 100, 100);
+	ctx.charaManager.Spawn(CharacterType::Hero, 900, 500);
+	ctx.charaManager.Spawn(CharacterType::Castle, 1200,500);
 }
 
 void GameScene::Update()
 {
-	static int oldKey = 0;
-	int nowKey = CheckHitKey(KEY_INPUT_2);
-
-	//キーが入力されたらシーンの移動
-	if (nowKey == 1 && oldKey == 0)
-	{
-		ctx.sceneManager.RequestSceneChange(0);//タイトルに戻る
-	}
-
-	oldKey = nowKey;
+	RetrunTitle();
 }
 
 void GameScene::Draw()
@@ -37,17 +31,21 @@ void GameScene::Draw()
 
 void GameScene::ImageDraw()
 {
-	//No.1
-	int monster = ctx.imageManager.Get("Hero");
-	if (monster == -1)
+}
+
+/// <summary>
+/// 2キーを押してタイトルに戻る
+/// </summary>
+void GameScene::RetrunTitle()
+{
+	static int oldKey = 0;
+	int nowKey = CheckHitKey(KEY_INPUT_2);
+
+	//キーが入力されたらシーンの移動
+	if (nowKey == 1 && oldKey == 0)
 	{
-		DrawString(10, 750, "読み込み失敗", GetColor(255, 255, 255));
+		ctx.sceneManager.RequestSceneChange(0);//タイトルに戻る
 	}
-	DrawRotaGraph(
-		200, 300,
-		0.2,
-		0,
-		monster,
-		TRUE
-	);
+
+	oldKey = nowKey;
 }

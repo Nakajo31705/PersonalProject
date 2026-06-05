@@ -13,7 +13,7 @@ CharacterManager::CharacterManager(ImageManager* img)
 void CharacterManager::Init()
 {
 	heroImg = imageManager->Get("Hero");
-	vampireImg = imageManager->Get("vampire");
+	castleImg = imageManager->Get("Castle");
 }
 
 /// <summary>
@@ -32,8 +32,18 @@ void CharacterManager::Spawn(CharacterType type, float x, float y)
 
 	if (type == CharacterType::Hero)
 		c.imageId = heroImg;
-	else
-		c.imageId = vampireImg;
+	if(type == CharacterType::Castle)
+		c.imageId = castleImg;
+
+
+	//勇者のステータス
+	if (type == CharacterType::Hero)
+	{
+		c.HP = 100;
+		c.power = 20;
+		c.speed = 5;
+		c.Range = 20;
+	}
 
 	characters.push_back(c);
 }
@@ -60,4 +70,40 @@ void CharacterManager::Draw()
 			TRUE
 		);
 	}
+}
+
+/// <summary>
+/// キャラクターのAI処理
+/// </summary>
+void CharacterManager::CharacterAI()
+{
+	for (auto& c : characters)
+	{
+
+		//勇者のAI
+		if (c.type == CharacterType::Hero)
+		{
+			switch (c.state)
+			{
+			case CharacterState::Wait:
+				break;
+			case CharacterState::Walk:
+					break;
+			case CharacterState::Attack:
+				break;
+			case CharacterState::Dead:
+				break;
+			}
+		}
+	}
+}
+
+/// <summary>
+/// 死亡処理
+/// </summary>
+/// <returns></returns>
+
+bool CharacterManager::IsDead(const Character& c)
+{
+	return c.HP <= 0;
 }

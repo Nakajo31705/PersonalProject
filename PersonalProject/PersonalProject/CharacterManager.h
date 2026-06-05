@@ -1,14 +1,30 @@
 enum class CharacterType
 {
 	Hero,
-	Vampire
+	Castle
+};
+
+enum class CharacterState
+{
+	Wait,
+	Walk,
+	Attack,
+	Dead,
 };
 
 struct Character
 {
 	CharacterType type;
+	CharacterState state;
 	int imageId;
 
+	//ステータス
+	int HP;
+	int power;
+	int speed;
+	float Range;
+
+	//描画関係
 	float x;
 	float y;
 	float scale;
@@ -27,10 +43,13 @@ public:
 	void Update();
 	void Draw();
 
+	void CharacterAI();
+	bool IsDead(const Character& c);
+
 private:
 	ImageManager* imageManager;
 	std::vector<Character> characters;
 
 	int heroImg = -1;
-	int vampireImg = -1;
+	int castleImg = -1;
 };

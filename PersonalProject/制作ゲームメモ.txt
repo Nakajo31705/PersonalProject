@@ -7,3 +7,32 @@
 自分のキャラクターを任意に召喚し、触れたらお互いに攻撃ができる。(HPが０になったら死亡)
 
 タイトル【進め！勇者ども】
+
+【フォルダー】
+　main
+	| -Game
+		| -GameManager
+		| - ImageManager
+		| - SceneManager
+				| - GameScene
+				| - TitleScene
+		| - CharacterManager
+
+
+【キャラクターAI】
+Dead
+もしHPが０になったら死亡とする
+HPが０ではなかったらWaitステートを変更
+
+Wait 
+待機時間を設定(timerなどの変数を作る)
+もし、待機時間が0ならWalkにステートを変更
+
+Walk
+敵との距離を計算し、攻撃範囲だったらAttackにステートを変更
+攻撃範囲外だったら、進行方向に移動する
+
+Attack
+敵に攻撃をしたかのフラグを用意
+もしFalseだったら攻撃をする
+TrueだったらDeadにステートを変更

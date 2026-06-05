@@ -60,6 +60,7 @@ void SceneManager::CheckSceneChange()
 	}
 
 	nextScene = -1;
+	scene->Init();
 }
 
 
