@@ -1,55 +1,87 @@
+#include <vector>
+#include <string>
+
+/// <summary>
+/// キャラクターの種類を表すenum
+/// </summary>
 enum class CharacterType
 {
 	Hero,
-	Castle
+	Vampire,
 };
 
+/// <summary>
+/// キャラクターの情報を表すenum
+/// </summary>
 enum class CharacterState
 {
-	Wait,
 	Walk,
 	Attack,
 	Dead,
 };
 
+/// <summary>
+/// キャラクターのステータスを持つ構造体
+/// </summary>
+struct CharacterData
+{
+	int imageId = -1;
+	int HP = 0;
+	int power = 0;
+	float speed = 0;
+	int range = 0;
+	float waitTime = 0;
+	bool player = true;
+};
+
+/// <summary>
+/// キャラクターの描画や情報を持つ構造体
+/// </summary>
 struct Character
 {
 	CharacterType type;
-	CharacterState state;
-	int imageId;
+	CharacterState state = CharacterState::Dead;
+	const CharacterData* data;
 
-	//ステータス
-	int HP;
-	int power;
-	int speed;
-	float Range;
+	int currentHP = 0;
+	float waitTimer = 0;
+	bool isAttacking = false;
+	bool player = true;
 
 	//描画関係
-	float x;
-	float y;
-	float scale;
+	float x = 0;
+	float y = 0;
+	float scale = 0;
 };
 
 class ImageManager;
 
-#include <vector>
-
 class CharacterManager
 {
 public:
-	CharacterManager(ImageManager* img);
+	CharacterManager(ImageManager& img);
 	void Init();
 	void Spawn(CharacterType type, float x, float y);
 	void Update();
 	void Draw();
 
-	void CharacterAI();
-	bool IsDead(const Character& c);
+	//キャラクターの状態ごとの更新関数
+	void UpdateDead(Character& c);
+	void UpdateWalk(Character& c);
+	void UpdateAttack(Character& c);
+
+	void CharacterAI(Character& c);
+	Character* GetTarget(Character& c);
+	bool IsDead(Character& c);
+	void Attack(Character& c);
+	void SetCharacterData(CharacterData& data, const std::string& imageName, int hp, int power, float speed, int range, float waitTime, bool player);
+	void InitCharacterData();
 
 private:
-	ImageManager* imageManager;
+	ImageManager& imageManager;
 	std::vector<Character> characters;
 
-	int heroImg = -1;
-	int castleImg = -1;
+	//キャラクターのデータ
+	CharacterData heroData;
+	CharacterData vampireData;
 };

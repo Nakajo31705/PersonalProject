@@ -3,11 +3,10 @@
 
 Game::Game()
     :
-    ctx{sceneManager, imageManager,gameManager,charaManager},
+    ctx{sceneManager, imageManager,gameManager},
     imageManager(),
     sceneManager(ctx),
-    gameManager(),
-    charaManager(&imageManager)
+    gameManager()
 {
 }
 
@@ -33,7 +32,6 @@ bool Game::Init()
     InitImage();
     sceneManager.Init();
     gameManager.Init();
-    charaManager.Init();
 
     isRunning = true;
     return true;
@@ -78,7 +76,10 @@ void Game::InitImage()
 {
     //—EÒ
     imageManager.Load("Hero", "Data/character_hero.png");
+	imageManager.Load("Vampire", "Data/character_vampire.png");
+
     imageManager.Load("Castle","Data/castle_1.png");
+
 }
 
 /// <summary>
@@ -100,7 +101,6 @@ void Game::Update()
 {
     sceneManager.Update();
     gameManager.Update();
-    charaManager.Update();
 }
 
 /// <summary>
@@ -111,6 +111,5 @@ void Game::Render()
     ClearDrawScreen();
     sceneManager.Draw();
     gameManager.Draw();
-    charaManager.Draw();
     ScreenFlip();
 }

@@ -56,7 +56,7 @@ void SceneManager::CheckSceneChange()
 	}
 	else if (nextScene == 1)
 	{
-		scene = new GameScene(ctx, *this);
+		scene = new GameScene(ctx);
 	}
 
 	nextScene = -1;

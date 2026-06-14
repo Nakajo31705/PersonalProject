@@ -2,7 +2,6 @@
 #include "SceneManager.h"
 #include "ImageManager.h"
 #include "GameManager.h"
-#include "CharacterManager.h"
 
 class Game
 {
@@ -22,6 +21,5 @@ private:
 	SceneManager sceneManager;
 	ImageManager imageManager;
 	GameManager gameManager;
-	CharacterManager charaManager;
 	GameContext ctx;
 };

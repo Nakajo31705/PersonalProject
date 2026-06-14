@@ -1,36 +1,47 @@
+#include "DxLib.h"
 #include "GameScene.h"
 #include "SceneManager.h"
 #include "ImageManager.h"
 #include "Game.h"
 
 //コンストラクタで初期化
-GameScene::GameScene(GameContext& ctx, SceneManager& sm)
-	:ctx(ctx), sm(sm)
+GameScene::GameScene(GameContext& ctx)
+	:ctx(ctx)
+	, charaManager(ctx.imageManager)
+	, map(ctx.imageManager)
 {
 }
 
 void GameScene::Init()
 {
-	printfDx("Spawn called\n", 100, 100);
-	ctx.charaManager.Spawn(CharacterType::Hero, 900, 500);
-	ctx.charaManager.Spawn(CharacterType::Castle, 1200,500);
+	charaManager.Init();
+	map.Init();
+	charaManager.Spawn(CharacterType::Vampire, ePosX, ePosY);
 }
 
 void GameScene::Update()
 {
 	RetrunTitle();
+	charaManager.Update();
+	map.Update();
+
+	if (CheckHitKey(KEY_INPUT_3))
+	{
+		charaManager.Spawn(CharacterType::Hero, pPosX, pPosY + 10);
+	}
 }
 
 void GameScene::Draw()
 {
-	ImageDraw();
+	
+	map.Draw();
+	charaManager.Draw();
+
+	map.CreateMap(MapObjectType::pCastle, pPosX, pPosY);
+	map.CreateMap(MapObjectType::pCastle, ePosX, ePosY);
 
 	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
 	DrawString(100, 120, "2を押してタイトルへ戻る", GetColor(255, 255, 0));
-}
-
-void GameScene::ImageDraw()
-{
 }
 
 /// <summary>
