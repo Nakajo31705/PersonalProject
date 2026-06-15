@@ -16,14 +16,7 @@ void GameScene::Init()
 {
 	charaManager.Init();
 	map.Init();
-
-	map.CreateMap(MapObjectType::Sky, 960, 300, 0.8);
-	map.CreateMap(MapObjectType::Ground_r, 1880, 735, 0.2);
-	map.CreateMap(MapObjectType::Ground_l, 50, 735, 0.2);
-	for (int i = 0; i < 18; i++)
-	{
-		map.CreateMap(MapObjectType::Ground_c, 150 + i * 100, 735, 0.2);
-	}
+	DrawMap();
 
 	charaManager.Spawn(CharacterType::pCastle, pPosX, castleY, 0.2);
 	charaManager.Spawn(CharacterType::eCastle, ePosX, castleY + 10, 0.3);
@@ -76,4 +69,30 @@ void GameScene::RetrunTitle()
 	}
 
 	oldKey = nowKey;
+}
+
+/// <summary>
+/// ƒ}ƒbƒv‚Ì•`‰æ
+/// </summary>
+void GameScene::DrawMap()
+{
+	map.CreateMap(MapObjectType::Sky, 960, 300, 0.8);
+	map.CreateMap(MapObjectType::Ground_r, 1880, 735, 0.2);
+	map.CreateMap(MapObjectType::Ground_l, 50, 735, 0.2);
+	for (int i = 0; i < 18; i++)
+	{
+		map.CreateMap(MapObjectType::Ground_c, 150 + i * 100, 735, 0.2);
+	}
+}
+
+void GameScene::DrawCharacter()
+{
+}
+
+void GameScene::DrawUI()
+{
+}
+
+void GameScene::DrawEffect()
+{
 }

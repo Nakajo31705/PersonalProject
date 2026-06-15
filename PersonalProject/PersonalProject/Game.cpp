@@ -74,16 +74,29 @@ void Game::ShutDown()
 /// </summary>
 void Game::InitImage()
 {
-    //勇者
+	//キャラクターの画像を読み込む
     imageManager.Load("Hero", "Data/character_hero.png");
 	imageManager.Load("Vampire", "Data/character_vampire.png");
+    imageManager.Load("pCastle", "Data/castle_1.png");
+    imageManager.Load("eCastle", "Data/castle_2.png");
+	imageManager.Load("Elf", "Data/character_elf.png");
+	imageManager.Load("Kinoko", "Data/character_kinoko.png");
+	imageManager.Load("Madoshi", "Data/character_madoshi.png");
+	imageManager.Load("minotaur", "Data/character_minotaur.png");
 
-    imageManager.Load("pCastle","Data/castle_1.png");
-	imageManager.Load("eCastle", "Data/castle_2.png");
+	//マップの画像を読み込む
 	imageManager.Load("Sky", "Data/sky.png");
 	imageManager.Load("Ground_c", "Data/ground_center.png");
 	imageManager.Load("Ground_l", "Data/ground_left.png");
 	imageManager.Load("Ground_r", "Data/ground_right.png");
+
+	//エフェクトの画像を読み込む
+	imageManager.Load("AttackEffect", "Data/attack_effect.png");
+	imageManager.Load("CutLeft", "Data/cut_left.png");
+	imageManager.Load("CutRight", "Data/cut_right.png");
+    imageManager.Load("FireLeft", "Data/fire_left.png");
+	imageManager.Load("FireRight", "Data/fire_right.png");
+	imageManager.Load("Hit", "Data/hit.png");
 }
 
 /// <summary>
