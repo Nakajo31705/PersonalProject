@@ -10,6 +10,10 @@ enum class MapObjectType
 {
 	pCastle,
 	eCastle,
+	Sky,
+	Ground_c,
+	Ground_l,
+	Ground_r,
 };
 
 /// <summary>
@@ -34,8 +38,8 @@ public:
 	void Update();
 	void Draw();
 
-	void CreateMap(MapObjectType type, int x, int y);
-	void SetMapdata(MapObject& data, const std::string& imageName);
+	void CreateMap(MapObjectType type, int x, int y, float scale);
+	void SetMapData(MapObject& data, const std::string& imageName);
 	void InitMapdata();
 
 private:
@@ -44,4 +48,8 @@ private:
 
 	//オブジェクトデータ
 	MapObject castle;
+	MapObject sky;
+	MapObject ground_c;
+	MapObject ground_l;
+	MapObject ground_r;
 };

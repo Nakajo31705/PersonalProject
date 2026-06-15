@@ -44,21 +44,33 @@ void Map::Draw()
 	}
 }
 
-void Map::CreateMap(MapObjectType type, int x, int y)
+void Map::CreateMap(MapObjectType type, int x, int y, float scale)
 {
 	MapObject obj;
 	obj.type = type;
 	obj.x = x;
 	obj.y = y;
-	obj.scale = 0.2f;
+	obj.scale = scale;
 
 	switch (type)
 	{
 	case MapObjectType::pCastle:
-		SetMapdata(obj, "Castle");
+		SetMapData(obj, "Castle");
 		break;
 	case MapObjectType::eCastle:
-		SetMapdata(obj, "Castle");
+		SetMapData(obj, "Castle");
+		break;
+	case MapObjectType::Sky:
+		SetMapData(obj, "Sky");
+		break;
+	case MapObjectType::Ground_c:
+		SetMapData(obj, "Ground_c");
+		break;
+	case MapObjectType::Ground_l:
+		SetMapData(obj, "Ground_l");
+		break;
+	case MapObjectType::Ground_r:
+		SetMapData(obj, "Ground_r");
 		break;
 	}
 
@@ -73,7 +85,7 @@ void Map::CreateMap(MapObjectType type, int x, int y)
 /// <param name="x">配置するX座標を入力</param>
 /// <param name="y">配置するY座標を入力</param>
 /// <param name="scale">オブジェクトの大きさを入力</param>
-void Map::SetMapdata(MapObject& data, const std::string& imageName)
+void Map::SetMapData(MapObject& data, const std::string& imageName)
 {
 	data.imageId = imageManager.Get(imageName);
 }
@@ -84,7 +96,11 @@ void Map::SetMapdata(MapObject& data, const std::string& imageName)
 void Map::InitMapdata()
 {
 	//自分の城のマップデータを設定
-	SetMapdata(castle, "Castle");
+	SetMapData(castle, "Castle");
+	SetMapData(sky, "Sky");
+	SetMapData(ground_c, "Ground_c");
+	SetMapData(ground_l, "Ground_l");
+	SetMapData(ground_r, "Ground_r");
 }
 
 

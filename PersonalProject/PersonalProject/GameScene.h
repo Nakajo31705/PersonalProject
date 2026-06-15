@@ -30,9 +30,11 @@ private:
 	CharacterManager charaManager;
 	Map map;
 
-	int pPosX = 1700;
-	int pPosY = 600;
+	int castleY = 620;
+	int charaY = 640;
 
+	int pPosX = 1700;
 	int ePosX = 200;
-	int ePosY = 600;
+
+	bool spawned = false;
 };

@@ -78,8 +78,12 @@ void Game::InitImage()
     imageManager.Load("Hero", "Data/character_hero.png");
 	imageManager.Load("Vampire", "Data/character_vampire.png");
 
-    imageManager.Load("Castle","Data/castle_1.png");
-
+    imageManager.Load("pCastle","Data/castle_1.png");
+	imageManager.Load("eCastle", "Data/castle_2.png");
+	imageManager.Load("Sky", "Data/sky.png");
+	imageManager.Load("Ground_c", "Data/ground_center.png");
+	imageManager.Load("Ground_l", "Data/ground_left.png");
+	imageManager.Load("Ground_r", "Data/ground_right.png");
 }
 
 /// <summary>

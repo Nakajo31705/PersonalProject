@@ -8,6 +8,8 @@ enum class CharacterType
 {
 	Hero,
 	Vampire,
+	pCastle,
+	eCastle,
 };
 
 /// <summary>
@@ -40,7 +42,7 @@ struct CharacterData
 struct Character
 {
 	CharacterType type;
-	CharacterState state = CharacterState::Dead;
+	CharacterState state = CharacterState::Walk;
 	const CharacterData* data;
 
 	int currentHP = 0;
@@ -61,12 +63,12 @@ class CharacterManager
 public:
 	CharacterManager(ImageManager& img);
 	void Init();
-	void Spawn(CharacterType type, float x, float y);
+	void Spawn(CharacterType type, float x, float y, float scale);
 	void Update();
 	void Draw();
 
 	//キャラクターの状態ごとの更新関数
-	void UpdateDead(Character& c);
+	void UpdateDead();
 	void UpdateWalk(Character& c);
 	void UpdateAttack(Character& c);
 
@@ -82,6 +84,8 @@ private:
 	std::vector<Character> characters;
 
 	//キャラクターのデータ
+	CharacterData pCastleData;
+	CharacterData eCastleData;
 	CharacterData heroData;
 	CharacterData vampireData;
 };

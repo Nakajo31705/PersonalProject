@@ -16,7 +16,19 @@ void GameScene::Init()
 {
 	charaManager.Init();
 	map.Init();
-	charaManager.Spawn(CharacterType::Vampire, ePosX, ePosY);
+
+	map.CreateMap(MapObjectType::Sky, 960, 300, 0.8);
+	map.CreateMap(MapObjectType::Ground_r, 1880, 735, 0.2);
+	map.CreateMap(MapObjectType::Ground_l, 50, 735, 0.2);
+	for (int i = 0; i < 18; i++)
+	{
+		map.CreateMap(MapObjectType::Ground_c, 150 + i * 100, 735, 0.2);
+	}
+
+	charaManager.Spawn(CharacterType::pCastle, pPosX, castleY, 0.2);
+	charaManager.Spawn(CharacterType::eCastle, ePosX, castleY + 10, 0.3);
+
+	charaManager.Spawn(CharacterType::Vampire, ePosX, charaY,0.2);
 }
 
 void GameScene::Update()
@@ -27,7 +39,15 @@ void GameScene::Update()
 
 	if (CheckHitKey(KEY_INPUT_3))
 	{
-		charaManager.Spawn(CharacterType::Hero, pPosX, pPosY + 10);
+		if (!spawned)
+		{
+			charaManager.Spawn(CharacterType::Hero, pPosX, charaY, 0.2);
+			spawned = true;
+		}
+	}
+	if (CheckHitKey(KEY_INPUT_4))
+	{
+		spawned = false;
 	}
 }
 
@@ -36,9 +56,6 @@ void GameScene::Draw()
 	
 	map.Draw();
 	charaManager.Draw();
-
-	map.CreateMap(MapObjectType::pCastle, pPosX, pPosY);
-	map.CreateMap(MapObjectType::pCastle, ePosX, ePosY);
 
 	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
 	DrawString(100, 120, "2を押してタイトルへ戻る", GetColor(255, 255, 0));
