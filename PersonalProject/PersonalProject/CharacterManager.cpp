@@ -1,9 +1,11 @@
 #include "DxLib.h"
 #include "CharacterManager.h"
 #include "ImageManager.h"
+#include "EffectManager.h"
 
-CharacterManager::CharacterManager(ImageManager& img)
+CharacterManager::CharacterManager(ImageManager& img, EffectManager& effect)
 	:imageManager(img)
+	,effectManager(effect)
 {
 	InitCharacterData();
 }
@@ -63,12 +65,13 @@ void CharacterManager::Draw()
 			100,
 			170 + i * 20,
 			GetColor(255, 255, 255),
-			"[%d] x=%.1f HP=%d State=%d player=%d",
+			"[%d] x=%.1f HP=%d State=%d player=% speed=%f",
 			i,
 			characters[i].x,
 			characters[i].currentHP,
 			(int)characters[i].state),
-			characters[i].player;
+			characters[i].player,
+			characters[i].data->speed;
 	}
 }
 
@@ -113,11 +116,12 @@ void CharacterManager::InitCharacterData()
 /// <param name="type">キャラクターの名前</param>
 /// <param name="x">生成するX座標</param>
 /// <param name="y">生成するX座標</param>
-void CharacterManager::Spawn(CharacterType type, float x, float y,float scale)
+void CharacterManager::Spawn(CharacterType type, EffectType effect, float x, float y,float scale)
 {
 	Character c;
 	const CharacterData* data = nullptr;
 	c.type = type;
+	c.effect = effect;
 	c.x = x;
 	c.y = y;
 	c.scale = scale;
@@ -126,15 +130,19 @@ void CharacterManager::Spawn(CharacterType type, float x, float y,float scale)
 	{
 	case CharacterType::Hero:
 		c.data = &heroData;
+		c.effect = EffectType::Cut_left;
 		break;
 	case CharacterType::Vampire:
 		c.data = &vampireData;
+		c.effect = EffectType::Fire_right;
 		break;
 	case CharacterType::pCastle:
 		c.data = &pCastleData;
+		c.effect = EffectType::None;
 		break;
 	case CharacterType::eCastle:
 		c.data = &eCastleData;
+		c.effect = EffectType::None;
 		break;
 	}
 
@@ -248,19 +256,52 @@ void CharacterManager::CharacterAI(Character& c)
 }
 
 /// <summary>
-/// 敵との距離を取得する関数
+/// 一番近い敵との距離を取得する関数
 /// </summary>
 /// <param name="c"></param>
 Character* CharacterManager::GetTarget(Character& c)
 {
 	Character* nearTarget = nullptr;
+	float nearDistance = FLT_MAX;
 
 	for (auto& target : characters)
 	{
 		if (&target == &c) continue;
 		if (target.player == c.player) continue;
 
-		nearTarget = &target;
+		float distance = abs(target.x - c.x);
+
+		if (distance < nearDistance)
+		{
+			nearDistance = distance;
+			nearTarget = &target;
+		}
+	}
+
+	return nearTarget;
+}
+
+/// <summary>
+/// エフェクトが敵と接触したか確認する関数
+/// </summary>
+/// <param name="effect">エフェクトデータの構造体を入力</param>
+/// <returns></returns>
+Character* CharacterManager::GetHitTarget(EffectData& effect)
+{
+	Character* nearTarget = nullptr;
+	float nearDistance = FLT_MAX;
+
+	for (auto& target : characters)
+	{
+		if (target.player == effect.player) continue;
+
+		float distance = abs(target.x - effect.x);
+
+		if (distance < nearDistance)
+		{
+			nearDistance = distance;
+			nearTarget = &target;
+		}
 	}
 
 	return nearTarget;
@@ -282,6 +323,7 @@ bool CharacterManager::IsDead(Character& c)
 void CharacterManager::Attack(Character& c)
 {
 	Character* target = GetTarget(c);
+	if (target == nullptr) return;
 
 	if (IsDead(c))
 	{
@@ -289,10 +331,21 @@ void CharacterManager::Attack(Character& c)
 		return;
 	}
 
-	//攻撃処理
-	target->currentHP -= c.data->power;
+	//ここでエフェクトを生成
+	effectManager.SpawnEffect(c.effect, c, target->x, target->y, 0.2, 0, 1, false);
+
 	c.isAttacking = true;
 	//攻撃のクールタイムをリセット
 	c.waitTimer = c.data->waitTime;
 	c.state = CharacterState::Attack;
+}
+
+/// <summary>
+/// 攻撃を受ける処理
+/// </summary>
+/// <param name="target">ダメージを受けるターゲットの設定</param>
+/// <param name="damage">攻撃力を設定</param>
+void CharacterManager::TakeDamage(Character& target, int damage)
+{
+	target.currentHP -= damage;
 }

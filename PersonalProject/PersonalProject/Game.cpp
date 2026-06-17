@@ -3,7 +3,7 @@
 
 Game::Game()
     :
-    ctx{sceneManager, imageManager,gameManager},
+    ctx{sceneManager, imageManager, gameManager},
     imageManager(),
     sceneManager(ctx),
     gameManager()

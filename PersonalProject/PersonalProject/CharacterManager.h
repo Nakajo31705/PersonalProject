@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include "EffectType.h"
 
 /// <summary>
 /// キャラクターの種類を表すenum
@@ -42,6 +43,7 @@ struct CharacterData
 struct Character
 {
 	CharacterType type;
+	EffectType effect;
 	CharacterState state = CharacterState::Walk;
 	const CharacterData* data;
 
@@ -57,13 +59,15 @@ struct Character
 };
 
 class ImageManager;
+class EffectManager;
+struct EffectData;
 
 class CharacterManager
 {
 public:
-	CharacterManager(ImageManager& img);
+	CharacterManager(ImageManager& img, EffectManager& effect);
 	void Init();
-	void Spawn(CharacterType type, float x, float y, float scale);
+	void Spawn(CharacterType type, EffectType effect ,float x, float y, float scale);
 	void Update();
 	void Draw();
 
@@ -74,13 +78,16 @@ public:
 
 	void CharacterAI(Character& c);
 	Character* GetTarget(Character& c);
+	Character* GetHitTarget(EffectData& effect);
 	bool IsDead(Character& c);
 	void Attack(Character& c);
+	void TakeDamage(Character& target, int damage);
 	void SetCharacterData(CharacterData& data, const std::string& imageName, int hp, int power, float speed, int range, float waitTime, bool player);
 	void InitCharacterData();
 
 private:
 	ImageManager& imageManager;
+	EffectManager& effectManager;
 	std::vector<Character> characters;
 
 	//キャラクターのデータ

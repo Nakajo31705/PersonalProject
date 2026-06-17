@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "Scene.h"
 #include "CharacterManager.h"
+#include "EffectManager.h"
 #include "Map.h"
 
 class SceneManager;
@@ -32,6 +33,7 @@ public:
 private:
 	GameContext& ctx;
 	CharacterManager charaManager;
+	EffectManager effectManager;
 	Map map;
 
 	int castleY = 620;

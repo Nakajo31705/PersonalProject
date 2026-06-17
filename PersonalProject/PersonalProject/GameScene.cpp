@@ -2,13 +2,15 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 #include "ImageManager.h"
+#include "EffectType.h"
 #include "Game.h"
 
 //コンストラクタで初期化
 GameScene::GameScene(GameContext& ctx)
 	:ctx(ctx)
-	, charaManager(ctx.imageManager)
+	, charaManager(ctx.imageManager, effectManager)
 	, map(ctx.imageManager)
+	, effectManager(ctx.imageManager,charaManager)
 {
 }
 
@@ -18,23 +20,25 @@ void GameScene::Init()
 	map.Init();
 	DrawMap();
 
-	charaManager.Spawn(CharacterType::pCastle, pPosX, castleY, 0.2);
-	charaManager.Spawn(CharacterType::eCastle, ePosX, castleY + 10, 0.3);
+	charaManager.Spawn(CharacterType::pCastle, EffectType::None, pPosX, castleY, 0.2);
+	charaManager.Spawn(CharacterType::eCastle, EffectType::None, ePosX, castleY + 10, 0.3);
 
-	charaManager.Spawn(CharacterType::Vampire, ePosX, charaY,0.2);
+	charaManager.Spawn(CharacterType::Vampire, EffectType::Cut_right, ePosX, charaY,0.2);
 }
 
 void GameScene::Update()
 {
 	RetrunTitle();
-	charaManager.Update();
 	map.Update();
+	charaManager.Update();
+	effectManager.Update();
+
 
 	if (CheckHitKey(KEY_INPUT_3))
 	{
 		if (!spawned)
 		{
-			charaManager.Spawn(CharacterType::Hero, pPosX, charaY, 0.2);
+			charaManager.Spawn(CharacterType::Hero, EffectType::Cut_left,pPosX, charaY, 0.2);
 			spawned = true;
 		}
 	}
@@ -46,9 +50,9 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	
 	map.Draw();
 	charaManager.Draw();
+	effectManager.Draw();
 
 	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
 	DrawString(100, 120, "2を押してタイトルへ戻る", GetColor(255, 255, 0));

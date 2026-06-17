@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
