@@ -1,7 +1,6 @@
 #pragma once
 #include "SceneManager.h"
 #include "ImageManager.h"
-#include "GameManager.h"
 
 class Game
 {
@@ -20,6 +19,5 @@ private:
 	bool isRunning = true;
 	SceneManager sceneManager;
 	ImageManager imageManager;
-	GameManager gameManager;
 	GameContext ctx;
 };

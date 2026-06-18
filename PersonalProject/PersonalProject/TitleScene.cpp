@@ -14,7 +14,7 @@ void TitleScene::Init()
 void TitleScene::Update()
 {
 	static int oldKey = 0;
-	int nowKey = CheckHitKey(KEY_INPUT_1);
+	int nowKey = CheckHitKey(KEY_INPUT_RETURN);
 
 	//キーが押されたらシーンの移動
 	if (nowKey == 1 && oldKey == 0)
@@ -28,5 +28,5 @@ void TitleScene::Update()
 void TitleScene::Draw()
 {
 	DrawString(100, 100, "タイトル", GetColor(255, 255, 255));
-	DrawString(100, 120, "１を押してゲームスタート", GetColor(255, 255, 0));
+	DrawString(100, 120, "ENTERを押してゲームスタート", GetColor(255, 255, 0));
 }

@@ -3,10 +3,9 @@
 
 Game::Game()
     :
-    ctx{sceneManager, imageManager, gameManager},
+    ctx{sceneManager, imageManager},
     imageManager(),
-    sceneManager(ctx),
-    gameManager()
+    sceneManager(ctx)
 {
 }
 
@@ -31,7 +30,6 @@ bool Game::Init()
 
     InitImage();
     sceneManager.Init();
-    gameManager.Init();
 
     isRunning = true;
     return true;
@@ -117,7 +115,6 @@ void Game::ProcessInput()
 void Game::Update()
 {
     sceneManager.Update();
-    gameManager.Update();
 }
 
 /// <summary>
@@ -127,6 +124,5 @@ void Game::Render()
 {
     ClearDrawScreen();
     sceneManager.Draw();
-    gameManager.Draw();
     ScreenFlip();
 }

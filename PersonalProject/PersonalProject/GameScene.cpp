@@ -11,14 +11,16 @@ GameScene::GameScene(GameContext& ctx)
 	, charaManager(ctx.imageManager, effectManager)
 	, map(ctx.imageManager)
 	, effectManager(ctx.imageManager,charaManager)
+	, gameManager(charaManager)
 {
 }
 
 void GameScene::Init()
 {
-	charaManager.Init();
+	gameManager.Init();
 	map.Init();
 	DrawMap();
+	charaManager.Init();
 
 	charaManager.Spawn(CharacterType::pCastle, EffectType::None, pPosX, castleY, 0.2);
 	charaManager.Spawn(CharacterType::eCastle, EffectType::None, ePosX, castleY + 10, 0.3);
@@ -29,33 +31,21 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	RetrunTitle();
+	gameManager.Update();
 	map.Update();
 	charaManager.Update();
 	effectManager.Update();
-
-
-	if (CheckHitKey(KEY_INPUT_3))
-	{
-		if (!spawned)
-		{
-			charaManager.Spawn(CharacterType::Hero, EffectType::Cut_left,pPosX, charaY, 0.2);
-			spawned = true;
-		}
-	}
-	if (CheckHitKey(KEY_INPUT_4))
-	{
-		spawned = false;
-	}
 }
 
 void GameScene::Draw()
 {
+	gameManager.Draw();
 	map.Draw();
 	charaManager.Draw();
 	effectManager.Draw();
 
 	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
-	DrawString(100, 120, "2を押してタイトルへ戻る", GetColor(255, 255, 0));
+	DrawString(100, 120, "ENTERを押してタイトルへ戻る", GetColor(255, 255, 0));
 }
 
 /// <summary>
@@ -64,7 +54,7 @@ void GameScene::Draw()
 void GameScene::RetrunTitle()
 {
 	static int oldKey = 0;
-	int nowKey = CheckHitKey(KEY_INPUT_2);
+	int nowKey = CheckHitKey(KEY_INPUT_RETURN);
 
 	//キーが入力されたらシーンの移動
 	if (nowKey == 1 && oldKey == 0)

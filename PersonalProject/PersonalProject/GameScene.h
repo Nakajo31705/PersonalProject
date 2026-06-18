@@ -3,17 +3,17 @@
 #include "Scene.h"
 #include "CharacterManager.h"
 #include "EffectManager.h"
+#include "GameManager.h"
 #include "Map.h"
+
 
 class SceneManager;
 class ImageManager;
-class GameManager;
 
 struct GameContext
 {
 	SceneManager& sceneManager;
 	ImageManager& imageManager;
-	GameManager& gameManager;
 };
 
 class GameScene : public Scene
@@ -34,6 +34,7 @@ private:
 	GameContext& ctx;
 	CharacterManager charaManager;
 	EffectManager effectManager;
+	GameManager gameManager;
 	Map map;
 
 	int castleY = 620;
@@ -41,6 +42,4 @@ private:
 
 	int pPosX = 1700;
 	int ePosX = 200;
-
-	bool spawned = false;
 };
