@@ -16,7 +16,7 @@ Game::Game()
 bool Game::Init()
 {
     //---ウィンドウ設定---
-    int winWidth = 1920;
+    int winWidth = 1980;
     int winHeight = 1080;
     int bitColor = 0;
     SetGraphMode(winWidth, winHeight, bitColor);
@@ -80,7 +80,7 @@ void Game::InitImage()
 	imageManager.Load("Elf", "Data/character_elf.png");
 	imageManager.Load("Kinoko", "Data/character_kinoko.png");
 	imageManager.Load("Madoshi", "Data/character_madoshi.png");
-	imageManager.Load("minotaur", "Data/character_minotaur.png");
+	imageManager.Load("Minotaur", "Data/character_minotaur.png");
 
 	//マップの画像を読み込む
 	imageManager.Load("Sky", "Data/sky.png");

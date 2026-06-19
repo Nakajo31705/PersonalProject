@@ -19,6 +19,8 @@ void CharacterManager::Init()
 
 void CharacterManager::Update()
 {
+	GameEndCheck();
+
 	for (auto& c : characters)
 	{
 		if (IsDead(c))
@@ -51,28 +53,6 @@ void CharacterManager::Draw()
 			TRUE
 		);
 	}
-
-	DrawFormatString(
-		100,
-		150,
-		GetColor(255, 255, 255),
-		"キャラクター数: %d",
-		(int)characters.size());
-
-	for (int i = 0; i < characters.size(); i++)
-	{
-		DrawFormatString(
-			100,
-			170 + i * 20,
-			GetColor(255, 255, 255),
-			"[%d] x=%.1f HP=%d State=%d player=% speed=%f",
-			i,
-			characters[i].x,
-			characters[i].currentHP,
-			(int)characters[i].state),
-			characters[i].player,
-			characters[i].data->speed;
-	}
 }
 
 /// <summary>
@@ -104,10 +84,43 @@ void CharacterManager::SetCharacterData(CharacterData& data, const std::string& 
 void CharacterManager::InitCharacterData()
 {
 	//勇者のデータを初期化
-	SetCharacterData(heroData, "Hero", 20, 1, 1, 500, 5, true);
-	SetCharacterData(vampireData, "Vampire", 150, 1, 1, 250, 5, false);
+	SetCharacterData(heroData, "Hero", 40, 2, 2, 150, 100, true);
+	SetCharacterData(vampireData, "Vampire", 150, 5, 1, 250, 200, false);
 	SetCharacterData(pCastleData, "pCastle", 500, 0, 0, 0, 0, true);
 	SetCharacterData(eCastleData, "eCastle", 500, 0, 0, 0, 0, false);
+	SetCharacterData(ElfData, "Elf", 20, 10, 1, 300, 200, true);
+	SetCharacterData(MadoshiData, "Madoshi", 30, 1, 2, 350, 300, true);
+	SetCharacterData(KinokoData, "Kinoko", 200, 3, 0.5, 150, 200, false);
+	SetCharacterData(MinotaurData, "Minotaur", 300, 4, 3, 100, 350, false);
+}
+
+bool CharacterManager::GetPlayerLose()
+{
+	return playerLose;
+}
+
+bool CharacterManager::GetEnemyLose()
+{
+	return enemyLose;
+}
+
+/// <summary>
+/// プレイヤーと敵それぞれの城のHPを確認し0以下になったら負けとする
+/// </summary>
+void CharacterManager::GameEndCheck()
+{
+	for (int i = 0; i < characters.size(); i++)
+	{
+		if (characters[i].type == CharacterType::pCastle && characters[i].currentHP <= 0)
+		{
+			playerLose = true;
+		}
+		
+		if (characters[i].type == CharacterType::eCastle && characters[i].currentHP <= 0)
+		{
+			enemyLose = true;
+		}
+	}
 }
 
 /// <summary>
@@ -143,6 +156,22 @@ void CharacterManager::Spawn(CharacterType type, EffectType effect, float x, flo
 	case CharacterType::eCastle:
 		c.data = &eCastleData;
 		c.effect = EffectType::None;
+		break;
+	case CharacterType::Elf:
+		c.data = &ElfData;
+		c.effect = EffectType::Hit;
+		break;
+	case CharacterType::Madoshi:
+		c.data = &MadoshiData;
+		c.effect = EffectType::Fire_left;
+		break;
+	case CharacterType::Kinoko:
+		c.data = &KinokoData;
+		c.effect = EffectType::Attack_effect;
+		break;
+	case CharacterType::Minotaur:
+		c.data = &MinotaurData;
+		c.effect = EffectType::Cut_right;
 		break;
 	}
 

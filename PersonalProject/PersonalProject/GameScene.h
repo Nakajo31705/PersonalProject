@@ -40,6 +40,6 @@ private:
 	int castleY = 620;
 	int charaY = 640;
 
-	int pPosX = 1700;
+	int pPosX = 1300;
 	int ePosX = 200;
 };

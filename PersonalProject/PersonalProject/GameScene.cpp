@@ -21,11 +21,6 @@ void GameScene::Init()
 	map.Init();
 	DrawMap();
 	charaManager.Init();
-
-	charaManager.Spawn(CharacterType::pCastle, EffectType::None, pPosX, castleY, 0.2);
-	charaManager.Spawn(CharacterType::eCastle, EffectType::None, ePosX, castleY + 10, 0.3);
-
-	charaManager.Spawn(CharacterType::Vampire, EffectType::Cut_right, ePosX, charaY,0.2);
 }
 
 void GameScene::Update()
@@ -39,13 +34,13 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-	gameManager.Draw();
 	map.Draw();
 	charaManager.Draw();
 	effectManager.Draw();
+	gameManager.Draw();
 
-	DrawString(100, 100, "ゲームシーン", GetColor(255, 255, 255));
-	DrawString(100, 120, "ENTERを押してタイトルへ戻る", GetColor(255, 255, 0));
+	DrawString(0, 0, "ゲームシーン", GetColor(255, 255, 255));
+	DrawString(0, 20, "SPACEを押してタイトルへ戻る", GetColor(255, 255, 0));
 }
 
 /// <summary>
@@ -54,7 +49,7 @@ void GameScene::Draw()
 void GameScene::RetrunTitle()
 {
 	static int oldKey = 0;
-	int nowKey = CheckHitKey(KEY_INPUT_RETURN);
+	int nowKey = CheckHitKey(KEY_INPUT_SPACE);
 
 	//キーが入力されたらシーンの移動
 	if (nowKey == 1 && oldKey == 0)
@@ -63,6 +58,12 @@ void GameScene::RetrunTitle()
 	}
 
 	oldKey = nowKey;
+
+	//ゲームリザルト状態の時にリクエストが来たらタイトルへ戻る
+	if (gameManager.GetReStart())
+	{
+		ctx.sceneManager.RequestSceneChange(0);
+	}
 }
 
 /// <summary>
@@ -70,7 +71,7 @@ void GameScene::RetrunTitle()
 /// </summary>
 void GameScene::DrawMap()
 {
-	map.CreateMap(MapObjectType::Sky, 960, 300, 0.8);
+	map.CreateMap(MapObjectType::Sky, 700, 300, 0.8);
 	map.CreateMap(MapObjectType::Ground_r, 1880, 735, 0.2);
 	map.CreateMap(MapObjectType::Ground_l, 50, 735, 0.2);
 	for (int i = 0; i < 18; i++)

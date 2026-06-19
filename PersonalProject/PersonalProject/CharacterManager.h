@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <string>
 #include "EffectType.h"
@@ -11,6 +12,10 @@ enum class CharacterType
 	Vampire,
 	pCastle,
 	eCastle,
+	Elf,
+	Madoshi,
+	Kinoko,
+	Minotaur
 };
 
 /// <summary>
@@ -84,15 +89,24 @@ public:
 	void TakeDamage(Character& target, int damage);
 	void SetCharacterData(CharacterData& data, const std::string& imageName, int hp, int power, float speed, int range, float waitTime, bool player);
 	void InitCharacterData();
+	bool GetPlayerLose();
+	bool GetEnemyLose();
+	void GameEndCheck();
 
 private:
 	ImageManager& imageManager;
 	EffectManager& effectManager;
 	std::vector<Character> characters;
+	bool playerLose = false;
+	bool enemyLose = false;
 
 	//キャラクターのデータ
 	CharacterData pCastleData;
 	CharacterData eCastleData;
 	CharacterData heroData;
 	CharacterData vampireData;
+	CharacterData ElfData;
+	CharacterData MadoshiData;
+	CharacterData KinokoData;
+	CharacterData MinotaurData;
 };

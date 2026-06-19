@@ -12,13 +12,29 @@ public:
 	void Draw();
 
 	void Player();
+	void Enemy();
+	void Result();
+	void ReStart();
+	bool GetReStart();
 private:
 	CharacterManager& charaManager;
 	bool spawned = false;
+	bool firstenemySpawned = false;
+	bool secondenemySpawned = true;
+	bool thirdenemySpawned = true;
+	bool Restart = false;
 
 	int castleY = 620;
 	int charaY = 640;
 
-	int pPosX = 1700;
+	int pPosX = 1300;
 	int ePosX = 200;
+
+	float spawnResetTime = 500;
+	float currentResetTime = 0;
+
+	float enemySpawnedTime = 0;
+	float firstSpawnTime = 0;
+	float secondSpawnTime = 1000;
+	float thirdSpawnTime = 1500;
 };
