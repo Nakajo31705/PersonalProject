@@ -1,5 +1,13 @@
 #pragma once
 
+enum class EnemyPhase
+{
+	First,
+	Second,
+	Third,
+	End
+};
+
 class CharacterManager;
 
 class GameManager
@@ -17,6 +25,7 @@ public:
 	void ReStart();
 	bool GetReStart();
 private:
+	EnemyPhase phase;
 	CharacterManager& charaManager;
 	bool spawned = false;
 	bool firstenemySpawned = false;
@@ -35,6 +44,6 @@ private:
 
 	float enemySpawnedTime = 0;
 	float firstSpawnTime = 0;
-	float secondSpawnTime = 1000;
-	float thirdSpawnTime = 1500;
+	float secondSpawnTime = 2500;
+	float thirdSpawnTime = 5000;
 };

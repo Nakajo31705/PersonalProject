@@ -14,6 +14,7 @@ GameManager::~GameManager()
 
 void GameManager::Init()
 {
+	phase = EnemyPhase::First;
 	charaManager.Spawn(CharacterType::pCastle, EffectType::None, pPosX, castleY, 0.2);
 	charaManager.Spawn(CharacterType::eCastle, EffectType::None, ePosX, castleY + 10, 0.3);
 
@@ -22,6 +23,7 @@ void GameManager::Init()
 
 void GameManager::Update()
 { 
+	//プレイヤーの生成待機時間
 	if (spawned)
 	{
 		currentResetTime--;
@@ -32,13 +34,14 @@ void GameManager::Update()
 		}
 	}
 
+	//エネミーの生成フェーズの切り替え時間
 	enemySpawnedTime++;
-	if (enemySpawnedTime >= secondSpawnTime && firstenemySpawned)
+	if (enemySpawnedTime >= secondSpawnTime)
 	{
 		secondenemySpawned = false;
 	}
 
-	if (enemySpawnedTime >= thirdSpawnTime && secondenemySpawned)
+	if (enemySpawnedTime >= thirdSpawnTime)
 	{
 		thirdenemySpawned = false;
 	}
@@ -53,16 +56,21 @@ void GameManager::Draw()
 
 	if (!spawned)
 	{
-		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター生産可能");
+		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター召喚可能");
 	}
 	else
 	{
-		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター生産可能まで:%.2f", currentResetTime);
+		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター召喚可能まで:%.2f", currentResetTime);
 	}
+
+	DrawFormatString(0, 870, GetColor(255, 255, 255), "1を押して勇者を召喚");
+	DrawFormatString(0, 890, GetColor(255, 255, 255), "2を押してエルフを召喚");
+	DrawFormatString(0, 910, GetColor(255, 255, 255), "3を押して魔導士を召喚");
 }
 
 void GameManager::Player()
 {
+	//勇者の生成
 	if (CheckHitKey(KEY_INPUT_1))
 	{
 		if (!spawned)
@@ -71,6 +79,7 @@ void GameManager::Player()
 			spawned = true;
 		}
 	}
+	//エルフの生成
 	if (CheckHitKey(KEY_INPUT_2))
 	{
 		if (!spawned)
@@ -79,6 +88,7 @@ void GameManager::Player()
 			spawned = true;
 		}
 	}
+	//魔導士の生成
 	if (CheckHitKey(KEY_INPUT_3))
 	{
 		if (!spawned)
@@ -90,28 +100,44 @@ void GameManager::Player()
 
 }
 
+/// <summary>
+/// 敵の生成処理
+/// </summary>
 void GameManager::Enemy()
 {
-	//一体目の生成
-	if (!firstenemySpawned)
+	switch (phase)
+	{
+	case EnemyPhase::First:
+			break;
+	case EnemyPhase::Second:
+		break;
+	case EnemyPhase::Third:
+		break;
+	case EnemyPhase::End:
+		break;
+	}
+
+	//1体目の生成
+	if (phase == EnemyPhase::First && !firstenemySpawned)
 	{
 		charaManager.Spawn(CharacterType::Vampire, EffectType::Fire_right, ePosX, charaY, 0.2);
-		firstenemySpawned = true;
+		phase = EnemyPhase::Second;
 	}
-
-	if (!secondenemySpawned)
+	//2体目の生成
+	if (phase == EnemyPhase::Second && !secondenemySpawned)
 	{
 		charaManager.Spawn(CharacterType::Kinoko, EffectType::Attack_effect, ePosX, charaY, 0.2);
-		secondenemySpawned = true;
+		phase = EnemyPhase::Third;
 	}
-	if (!thirdenemySpawned)
+	//3体目の生成
+	if (phase == EnemyPhase::Third && !thirdenemySpawned)
 	{
 		charaManager.Spawn(CharacterType::Minotaur, EffectType::Cut_right, ePosX, charaY, 0.2);
-		thirdenemySpawned = true;
+		phase = EnemyPhase::End;
 	}
-
 }
 
+//リザルト演出
 void GameManager::Result()
 {
 	if (charaManager.GetPlayerLose())
@@ -153,6 +179,7 @@ void GameManager::Result()
 	}
 }
 
+//リザルト中のリセット処理
 void GameManager::ReStart()
 {
 	if (charaManager.GetPlayerLose() || charaManager.GetEnemyLose())

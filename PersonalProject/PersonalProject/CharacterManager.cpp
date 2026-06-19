@@ -90,8 +90,8 @@ void CharacterManager::InitCharacterData()
 	SetCharacterData(eCastleData, "eCastle", 500, 0, 0, 0, 0, false);
 	SetCharacterData(ElfData, "Elf", 20, 10, 1, 300, 200, true);
 	SetCharacterData(MadoshiData, "Madoshi", 30, 1, 2, 350, 300, true);
-	SetCharacterData(KinokoData, "Kinoko", 200, 3, 0.5, 150, 200, false);
-	SetCharacterData(MinotaurData, "Minotaur", 300, 4, 3, 100, 350, false);
+	SetCharacterData(KinokoData, "Kinoko", 200, 10, 0.5, 150, 200, false);
+	SetCharacterData(MinotaurData, "Minotaur", 400, 20, 3, 100, 350, false);
 }
 
 bool CharacterManager::GetPlayerLose()

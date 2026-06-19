@@ -6,7 +6,6 @@
 #include "GameManager.h"
 #include "Map.h"
 
-
 class SceneManager;
 class ImageManager;
 
