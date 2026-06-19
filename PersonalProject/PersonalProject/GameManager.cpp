@@ -97,7 +97,6 @@ void GameManager::Player()
 			spawned = true;
 		}
 	}
-
 }
 
 /// <summary>
