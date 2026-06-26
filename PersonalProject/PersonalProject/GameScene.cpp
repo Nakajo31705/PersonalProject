@@ -79,15 +79,3 @@ void GameScene::DrawMap()
 		map.CreateMap(MapObjectType::Ground_c, 150 + i * 100, 735, 0.2);
 	}
 }
-
-void GameScene::DrawCharacter()
-{
-}
-
-void GameScene::DrawUI()
-{
-}
-
-void GameScene::DrawEffect()
-{
-}

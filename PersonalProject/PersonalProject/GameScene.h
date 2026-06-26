@@ -25,9 +25,6 @@ public:
 
 	void RetrunTitle();
 	void DrawMap();
-	void DrawCharacter();
-	void DrawUI();
-	void DrawEffect();
 
 private:
 	GameContext& ctx;

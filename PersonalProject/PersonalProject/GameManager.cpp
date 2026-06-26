@@ -56,16 +56,16 @@ void GameManager::Draw()
 
 	if (!spawned)
 	{
-		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター召喚可能");
+		DrawFormatString(0, 810, GetColor(255, 255, 255), "キャラクター召喚可能");
 	}
 	else
 	{
-		DrawFormatString(0, 850, GetColor(255, 255, 255), "キャラクター召喚可能まで:%.2f", currentResetTime);
+		DrawFormatString(0, 810, GetColor(255, 255, 255), "キャラクター召喚可能まで:%.2f", currentResetTime);
 	}
 
-	DrawFormatString(0, 870, GetColor(255, 255, 255), "1を押して勇者を召喚");
-	DrawFormatString(0, 890, GetColor(255, 255, 255), "2を押してエルフを召喚");
-	DrawFormatString(0, 910, GetColor(255, 255, 255), "3を押して魔導士を召喚");
+	DrawFormatString(0, 830, GetColor(255, 255, 255), "1を押して勇者を召喚");
+	DrawFormatString(0, 850, GetColor(255, 255, 255), "2を押してエルフを召喚");
+	DrawFormatString(0, 870, GetColor(255, 255, 255), "3を押して魔導士を召喚");
 }
 
 void GameManager::Player()
