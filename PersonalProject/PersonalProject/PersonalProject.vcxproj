@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AoudioManager.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AoudioManager.h" />
     <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectType.h" />
